@@ -148,15 +148,18 @@ questions = JSON.parse(questions);
 //---------------------------------------------------------------//
 //Progress bar//
 let barWidth = 0;
-function growBar(){
-	barWidth += 10;
-	if(barWidth <= 100){ 
-		$('.bar').css({"width": barWidth +'%'});
-	}
+
+function growBar() {
+    barWidth += 10;
+    if (barWidth <= 100) {
+        $('.bar').css({
+            "width": barWidth + '%'
+        });
+    }
 }
 
-function progress(){
-	growBar(barWidth);
+function progress() {
+    growBar(barWidth);
 }
 //---------------------------------------------------------------//
 
@@ -249,10 +252,10 @@ let quizz = function () {
         $("#progress").show();
         $("#btnSuivant").hide();
         $("#ecranResultat").hide();
-    
+
         let round = 0;
         let point = 0;
-        
+
         displayOption(questions, round);
 
         function displayOption(array, round) {
@@ -405,5 +408,5 @@ let quizz = function () {
                 return false;
             }
         }
-});
+    });
 }
