@@ -66,7 +66,7 @@
     </div>
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
-        b <p class="phrase">Phrase ici</p>
+      <p class="phrase">Phrase ici</p>
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action active">Item 1 ici</a>
           <a href="#" class="list-group-item list-group-item-action">Item 2 ici</a>
@@ -112,26 +112,43 @@
       </div>
     </div>
   </div>
-
+  <div class="row" id="ecranResultat">
+    <div class="col-2" style="padding-left: 10px;" id="resultatCol1">
+    <table>
+      <tr><td>
+        Prénom: <span id="resultatPrenom"></span>
+      </td></tr>
+      <tr><td>
+        Nom: <span id="resultatNom"></span>
+      </td></tr>
+      <tr><td>
+        Age: <span id="resultatAge"></span>
+      </td></tr>
+      <tr><td>
+       Statut: <span id="resultatStatut"></span>
+    </td></tr>
+    <tr><td>
+      Score: <span id="resultatScore"></span>
+   </td></tr>
+    </table>
+    </div>
     <!-- Data Table -->
-    <table id="myTable" class="col-lg-12">
-      <thead>
-          <tr>
-              <th>Numéro</th>
-              <th>Question</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>Row 1 Data 1</td>
-              <td>Row 1 Data 2</td>
-          </tr>
-          <tr>
-              <td>Row 2 Data 1</td>
-              <td>Row 2 Data 2</td>
-          </tr>
-      </tbody>
-  </table>
+    <div class="col-5" id="resultatCol2">
+      <table id="myTable" class="display" style="width:80%">
+        <thead>
+            <tr>
+                <th>Numéro</th>
+                <th>Question</th>
+                <th>Résultat</th>
+            </tr>
+        </thead>
+    </table>
+    </div>
+    <div class="col-5" id="resultatCol3">
+      <div id="accordionResultat">
+      </div>
+  </div>
+</div>
 
   <!-- Javascript -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
