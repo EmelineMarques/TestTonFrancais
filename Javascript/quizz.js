@@ -6,6 +6,7 @@ let round = 0;
 let vosReponses = [];
 let profile = [];
 $("#ecranResultat").hide();
+$("#progress").hide();
 
 let questions = `[{
 		"question":"Comment s’écrit le participe passé de : ",
@@ -204,6 +205,7 @@ $("#formulaire").validate({
         $("#erreurs").hide();
         $("#formulaire").hide();
         $("#ecranResultat").hide();
+        $("#progress").hide();
         progress();
     },
     showErrors: function (errorMap, errorList) {
@@ -244,10 +246,13 @@ $.validator.addMethod(
 let quizz = function () {
     $(document).ready(function () {
         $("#accordion").show("slow");
+        $("#progress").show();
         $("#btnSuivant").hide();
         $("#ecranResultat").hide();
+    
         let round = 0;
         let point = 0;
+        
         displayOption(questions, round);
 
         function displayOption(array, round) {
