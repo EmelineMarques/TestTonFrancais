@@ -291,19 +291,14 @@ let quizz = function () {
             e.preventDefault();
             if ($(".active").length) {
                 let optionIndex = $(".active").index();
+                if (questions[round].reponseCorrecte === optionIndex) {
+                    questions[round].resultat = 1;
+                    point++;
+                }
                 if (round < questions.length - 1) {
-                    if (questions[round].reponseCorrecte !== optionIndex) {
-                        questions[round].resultat = 0;
-                        round++;
-                        progress();
-                        displayOption(questions, round);
-                    } else {
-                        questions[round].resultat = 1;
-                        point++;
-                        round++;
-                        progress();
-                        displayOption(questions, round);
-                    }
+                    round++;
+                    progress();
+                    displayOption(questions, round);
                     console.log(point);
                     return point;
                 } else {
