@@ -3,9 +3,9 @@
 let validation = false;
 let score = 0;
 let round = 0;
-
 let vosReponses = [];
 let profile = [];
+$("#ecranResultat").hide();
 
 let questions = `[{
 		"question":"Comment s’écrit le participe passé de : ",
@@ -113,6 +113,19 @@ let questions = `[{
         "resultat": 0
 	},
     {
+		"question":"Tous ces adjectifs doublent leur n final au féminin, sauf un : lequel ?",
+        "phrase":"",
+		"reponses":[
+            "Lapon",
+			"Ancien",
+			"Bon", 
+            "Méditerranéen"
+		], 
+		"reponseCorrecte": 0,
+        "numero": 9,
+        "resultat": 0
+	},
+    {
 		"question":"Dans cette liste de noms, un seul est masculin : lequel ?",
         "phrase":"",
 		"reponses":[
@@ -124,33 +137,34 @@ let questions = `[{
             "Stalactite"
 		], 
 		"reponseCorrecte":0,
-        "numero": 9,
-        "resultat": 0
-	},
-    {
-		"question":"Tous ces adjectifs doublent leur n final au féminin, sauf un : lequel ?",
-        "phrase":"",
-		"reponses":[
-            "Lapon",
-			"Ancien",
-			"Bon", 
-            "Méditerranéen"
-		], 
-		"reponseCorrecte": 0,
         "numero": 10,
         "resultat": 0
-
 	}
 ]`
 
 questions = JSON.parse(questions);
 
-$("#ecranResultat").hide();
+//---------------------------------------------------------------//
+//Progress bar//
+let barWidth = 0;
+function growBar(){
+	barWidth += 10;
+	if(barWidth <= 100){ 
+		$('.bar').css({"width": barWidth +'%'});
+	}
+}
 
+function progress(){
+	growBar(barWidth);
+}
+//---------------------------------------------------------------//
+
+
+
+//---------------------------------------------------------------//
+//Formulaire//
 $("#formulaire").validate({
-
     onfocusout: false,
-
     rules: {
         prenom: {
             required: true,
@@ -184,15 +198,14 @@ $("#formulaire").validate({
             required: "Le statut est requis"
         }
     },
-
     submitHandler: function () {
         quizz();
         profile = $("form").serializeArray();
         $("#erreurs").hide();
         $("#formulaire").hide();
         $("#ecranResultat").hide();
+        progress();
     },
-
     showErrors: function (errorMap, errorList) {
         if (validation) {
             const ul = $("<ul></ul>");
@@ -209,9 +222,7 @@ $("#formulaire").validate({
         $("#accordion").hide();
         validation = true;
     },
-
 });
-
 jQuery.validator.addMethod(
     "alphanumeric",
     function (value, element) {
@@ -219,7 +230,6 @@ jQuery.validator.addMethod(
     },
     "Lettres et chiffres uniquement"
 );
-
 $.validator.addMethod(
     "dateInferieur",
     function (value, element) {
@@ -228,28 +238,24 @@ $.validator.addMethod(
     },
     "La date de naissance doit être inférieure à la date d'aujourd'hui"
 );
+//---------------------------------------------------------------//
 
 let quizz = function () {
     $(document).ready(function () {
-
         $("#accordion").show("slow");
         $("#btnSuivant").hide();
         $("#ecranResultat").hide();
-
         let round = 0;
         let point = 0;
-
         displayOption(questions, round);
 
         function displayOption(array, round) {
             $(".list-group-item").remove();
             $.each(array, function () {
-                $(".card-title").text(`${round + 1}. ${array[round].question}`);
+                $(".card-title").text(`${round+1}. ${array[round].question}`);
                 $(".phrase").text(`${array[round].phrase}`);
-
             });
-
-            for (let i = 0; i <= array[round].reponses.length -1; i++) {
+            for (let i = 0; i < array[round].reponses.length; i++) {
                 $a = $("<a></a>");
                 $a.addClass("list-group-item");
                 $a.text(array[round].reponses[i]);
@@ -257,20 +263,19 @@ let quizz = function () {
                 $(".list-group").append($a);
             }
         }
-
         $(".list-group").on("click", function (e) {
             if (e.target.nodeName == "A") {
                 $(e.target)
                     .siblings()
                     .removeClass("active");
                 $(e.target).addClass("active");
-                $("#btnSuivant").show();
+                $("#btnSuivant").show("slow");
             }
             e.preventDefault();
         });
-
         $("#btnSuivant").on("click", function (e) {
             checkAnswer(e);
+            $("#btnSuivant").hide();
         });
 
         function checkAnswer(e) {
@@ -281,66 +286,67 @@ let quizz = function () {
                     if (questions[round].reponseCorrecte !== optionIndex) {
                         questions[round].resultat = 0;
                         round++;
+                        progress();
                         displayOption(questions, round);
                     } else {
                         questions[round].resultat = 1;
                         point++;
                         round++;
+                        progress();
                         displayOption(questions, round);
                     }
+                    console.log(point);
                     return point;
-                    //return round;
                 } else {
-
+                    round++
                     //Affiche les résultats dans ecranResultat
-
                     //Affichez le prénom, le nom, l’âge et le statut de l’utilisateur
                     //Affichez le score, soit le nombre de bonnes réponses sur le nombre total de questions
-                    $.each(profile, function() { 
-                        if(this.name === "prenom")  
-                            $("#resultatPrenom").text(this.value); 
-                        if(this.name === "nom")  
-                            $("#resultatNom").text(this.value); 
-                        if(this.name === "date")  {
+                    $.each(profile, function () {
+                        if (this.name === "prenom")
+                            $("#resultatPrenom").text(this.value);
+                        if (this.name === "nom")
+                            $("#resultatNom").text(this.value);
+                        if (this.name === "date") {
                             let dob = new Date(this.value);
                             let today = new Date();
-                            let age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-                            $("#resultatAge").text(age); 
-
+                            let age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                            $("#resultatAge").text(age);
                         }
-                        if(this.name === "statut") 
-                            $("#resultatStatut").text(this.value); 
-                   }); 
-                   //score
-                   $("#resultatScore").text(point + " / " + questions.length); 
-                   
-
+                        if (this.name === "statut")
+                            $("#resultatStatut").text(this.value);
+                    });
+                    //score
+                    $("#resultatScore").text(point + " / " + questions.length);
 
                     // Vous devez afficher une table qui contient le numéro de la question, la question et une
                     // indication montrant si la réponse a été bonne ou non. Vous devez utiliser DataTables.
-                    $('#myTable').DataTable( {
+                    $('#myTable').DataTable({
                         data: questions,
-                        columns: [
-                            { data: 'numero' },
-                            { data: 'question' },
-                            { data: 'resultat' }
-                        ],
-                        columnDefs: [
-                            {
-                                //affiche "Bon si resultat = 1, sinon affiche Pas bon"
-                                render: function (data, type, row) {
-                                    if(data == 0) return "Pas bon";
-                                    return "Bon";
-                                },
-                                targets: 2,
+                        columns: [{
+                                data: 'numero'
                             },
+                            {
+                                data: 'question'
+                            },
+                            {
+                                data: 'resultat'
+                            }
                         ],
+                        columnDefs: [{
+                            //affiche "Bon si resultat = 1, sinon affiche Pas bon"
+                            render: function (data, type, row) {
+                                if (data == 0) return "Mauvaise réponse";
+                                return "Bonne réponse";
+                            },
+                            targets: 2,
+                        }, ],
                         bPaginate: false,
-                        bFilter : false,
+                        bFilter: false,
                         info: false
-                    } );
+                    });
                     //l'accordion en jQueryUI
-                    $.each(questions, function() {
+                    $.each(questions, function () {
                         let h3 = $("<h3>" + this.numero + ". " + this.question + "</h3>");
                         let div = $("<div><p><b>" + this.phrase + "</b></p><p>" + this.reponses + "</p></div>");
                         $("#accordionResultat").append(h3);
@@ -350,9 +356,9 @@ let quizz = function () {
                     //texte de la question. Quand on clique dessus, on voit une liste des choix de réponses
 
                     $("#accordionResultat").accordion({
-                      collapsible: true,
-                      heightStyle: "content",
-                      active: false
+                        collapsible: true,
+                        heightStyle: "content",
+                        active: false
                     });
 
                     if (point > 7) {
@@ -360,6 +366,7 @@ let quizz = function () {
                         $(".modal-body>p").text(`C'est un véritable succès tu as : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
+                        $("#progress").hide();
                         $("#ecranResultat").show();
                         $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`C'est un véritable succès tu as : ${point}/10.`);
                     } else if (point >= 6) {
@@ -367,6 +374,7 @@ let quizz = function () {
                         $(".modal-body>p").text(`C'est bon mais peut mieux faire tu as : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
+                        $("#progress").hide();
                         $("#ecranResultat").show();
                         $('.alert').alert().show().removeClass("alert-dark").addClass("alert-warning bon-score").text(`C'est bon mais peut mieux faire tu as : ${point}/10.`);
                     } else if (point <= 5) {
@@ -374,36 +382,22 @@ let quizz = function () {
                         $(".modal-body>p").text(`C'est un véritable échec : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
+                        $("#progress").hide();
                         $("#ecranResultat").show();
-                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-danger echec-score").text(`C'est un véritable échec : ${point}/10.`);                        
-                    } else  if (point = 10) {
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-danger echec-score").text(`C'est un véritable échec : ${point}/10.`);
+                    } else if (point = 10) {
                         $(".modal-content").addClass("alert-success succes-score");
                         $(".modal-body>p").text(`Score parfait ! Tu as : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
+                        $("#progress").hide();
                         $("#ecranResultat").show();
                         $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`Tu as fait un score parfait de ${point}/10.`);
-                    }                    
+                    }
                 }
             } else {
                 return false;
             }
         }
-    });
-
-
+});
 }
-
-
-
-
-// Data table 
-/*$('#myTable').DataTable( {
-    data: questions,
-    columns: [
-        { data: 'numero' },
-        { data: 'question' },
-        { data: 'resultat' }
-    ]
-} );
-*/
