@@ -216,6 +216,7 @@ $("#formulaire").validate({
             validation = false;
             $('#erreurs').addClass("alert alert-danger w-50 mx-auto");
         }
+        $("#erreurs").show();
         this.defaultShowErrors();
     },
     invalidHandler: function (form, validator) {
