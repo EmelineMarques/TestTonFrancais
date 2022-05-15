@@ -131,12 +131,12 @@ let questions = `[{
 		"question":"Tous ces adjectifs doublent leur n final au féminin, sauf un : lequel ?",
         "phrase":"",
 		"reponses":[
+            "Lapon",
 			"Ancien",
 			"Bon", 
-			"Lapon",
             "Méditerranéen"
 		], 
-		"reponseCorrecte":2,
+		"reponseCorrecte": 0,
         "numero": 10,
         "resultat": 0
 
@@ -249,7 +249,7 @@ let quizz = function () {
 
             });
 
-            for (let i = 0; i <= array[round].reponses.length; i++) {
+            for (let i = 0; i <= array[round].reponses.length -1; i++) {
                 $a = $("<a></a>");
                 $a.addClass("list-group-item");
                 $a.text(array[round].reponses[i]);
@@ -341,8 +341,8 @@ let quizz = function () {
                     } );
                     //l'accordion en jQueryUI
                     $.each(questions, function() {
-                        let h3 = $("<h3>"+this.numero + ". " + this.question+"</h3>");
-                        let div = $("<div><p>"+this.reponses+"</p></div>");
+                        let h3 = $("<h3>" + this.numero + ". " + this.question + "</h3>");
+                        let div = $("<div><p><b>" + this.phrase + "</b></p><p>" + this.reponses + "</p></div>");
                         $("#accordionResultat").append(h3);
                         $("#accordionResultat").append(div);
                     });
@@ -361,24 +361,28 @@ let quizz = function () {
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#ecranResultat").show();
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`C'est un véritable succès tu as : ${point}/10.`);
                     } else if (point >= 6) {
-                        $(".modal-content").addClass("alert-warning");
-                        $(".modal-body>p").text(`C'est bon mais pas encore ça tu as : ${point}/${questions.length}.`);
+                        $(".modal-content").addClass("alert-warning bon-score");
+                        $(".modal-body>p").text(`C'est bon mais peut mieux faire tu as : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#ecranResultat").show();
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-warning bon-score").text(`C'est bon mais peut mieux faire tu as : ${point}/10.`);
                     } else if (point <= 5) {
-                        $(".modal-content").addClass("alert-danger");
+                        $(".modal-content").addClass("alert-danger echec-score");
                         $(".modal-body>p").text(`C'est un véritable échec : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
-                        $("#ecranResultat").show();                        
+                        $("#ecranResultat").show();
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-danger echec-score").text(`C'est un véritable échec : ${point}/10.`);                        
                     } else  if (point = 10) {
                         $(".modal-content").addClass("alert-success succes-score");
                         $(".modal-body>p").text(`Score parfait ! Tu as : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#ecranResultat").show();
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`Tu as fait un score parfait de ${point}/10.`);
                     }                    
                 }
             } else {

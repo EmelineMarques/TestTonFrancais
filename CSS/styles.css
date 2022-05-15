@@ -9956,8 +9956,27 @@ header h1 {
   color: #fff;
 }
 
+form {
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 10px;
+}
+form legend {
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
 #accordion {
   display: none;
+}
+
+.collapse {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.active {
+  color: #ffffff !important;
 }
 
 #message {
@@ -9965,7 +9984,28 @@ header h1 {
 }
 
 .succes-score {
-  background-color: #13E184 !important;
+  background-color: #d4edda !important;
+}
+
+.bon-score {
+  background-color: #fff3cd !important;
+}
+
+.echec-score {
+  background-color: #f8d7da !important;
+}
+
+.alert {
+  display: none;
+}
+
+#donnees {
+  display: none;
+}
+
+.ui-state-active {
+  background-color: #59359a !important;
+  border: 1px solid #59359a !important;
 }
 
 /*# sourceMappingURL=styles.css.map */

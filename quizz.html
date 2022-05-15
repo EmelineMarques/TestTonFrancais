@@ -29,6 +29,9 @@
   <!-- Formulaire -->
   <form id="formulaire" class="w-25 mx-auto">
     <div class="form-group">
+      <legend>Inscription</legend>
+    </div>
+    <div class="form-group">
       <label for="prenom" class="font-weight-bold">Prénom</label>
       <input type="text" name="prenom" class="form-control" id="prenom" required>
     </div>
@@ -51,36 +54,35 @@
     <button type="submit" id="button-debut" class="btn btn-primary">Valider</button>
   </form>
 
-
   <!-- Accordion bootstrap 4.6 -->
-  <div class="accordion w-75 mx-auto" id="accordion">
+  <div class="accordion w-75 mx-auto mt-5" id="accordion">
     <div class="card">
       <div class="card-header" id="headingOne">
         <h2 class="mb-0">
           <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
-            <h5 class="card-title">Titre de la question ici</h5>
+            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h5 class="card-title"><!-- TITRE DE LA QUESTION ICI --></h5>
           </button>
         </h2>
       </div>
     </div>
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapseOne" class="collapse show rounded-bottom" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
-      <p class="phrase">Phrase ici</p>
+        <p class="phrase">
+          <!-- PHRASE QUI ACCOMPAGNE CERTAINES QUESTIONS ICI -->
+        </p>
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action active">Item 1 ici</a>
-          <a href="#" class="list-group-item list-group-item-action">Item 2 ici</a>
-          <a href="#" class="list-group-item list-group-item-action">Item 3 ici</a>
+          <!-- CHOIX DES RÉPONSES ICI -->
         </div>
         <a href="#" class="btn btn-primary mt-3" id="btnSuivant">Suivant</a>
       </div>
     </div>
   </div>
-  </div>
-  <div class="row mt-3">
+
+  <div class="row mt-3 mx-0">
     <div class="col-12">
-      <div class="alert alert-dark" role="alert" id="message">
-        
+      <div class="alert alert-dark w-75 mx-auto" role="alert" id="message">
+
         <!-- MESSAGE ICI -->
 
       </div>
@@ -99,7 +101,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Résultat</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -112,43 +114,65 @@
       </div>
     </div>
   </div>
-  <div class="row" id="ecranResultat">
-    <div class="col-2" style="padding-left: 10px;" id="resultatCol1">
-    <table>
-      <tr><td>
-        Prénom: <span id="resultatPrenom"></span>
-      </td></tr>
-      <tr><td>
-        Nom: <span id="resultatNom"></span>
-      </td></tr>
-      <tr><td>
-        Age: <span id="resultatAge"></span>
-      </td></tr>
-      <tr><td>
-       Statut: <span id="resultatStatut"></span>
-    </td></tr>
-    <tr><td>
-      Score: <span id="resultatScore"></span>
-   </td></tr>
-    </table>
+  <div class="row mx-0" id="ecranResultat">
+    <div class="col-3" style="padding-left: 10px;" id="resultatCol1">
+      <table class="table table-bordered" title="Informations du participant">
+        <thead>
+          <tr>
+            <th scope="colgroup" colspan="2" class="text-center">Informations du participant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Prénom</th>
+            <td>
+              <span id="resultatPrenom"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Nom</th>
+            <td>
+              <span id="resultatNom"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Age</th>
+            <td>
+              <span id="resultatAge"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Statut</th>
+            <td>
+              <span id="resultatStatut"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Score</th>
+            <td>
+              <span id="resultatScore"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <!-- Data Table -->
     <div class="col-5" id="resultatCol2">
       <table id="myTable" class="display" style="width:80%">
         <thead>
-            <tr>
-                <th>Numéro</th>
-                <th>Question</th>
-                <th>Résultat</th>
-            </tr>
+          <tr>
+            <th>Numéro</th>
+            <th>Question</th>
+            <th>Résultat</th>
+          </tr>
         </thead>
-    </table>
+      </table>
     </div>
-    <div class="col-5" id="resultatCol3">
+    <div class="col-4" id="resultatCol3">
       <div id="accordionResultat">
       </div>
+    </div>
   </div>
-</div>
 
   <!-- Javascript -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -162,4 +186,5 @@
   <script src="./Javascript/quizz.js"></script>
 
 </body>
+
 </html>
