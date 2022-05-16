@@ -1,5 +1,3 @@
-// VALIDATION FORMULAIRE //
-
 let validation = false;
 let score = 0;
 let round = 0;
@@ -145,8 +143,6 @@ let questions = `[{
 
 questions = JSON.parse(questions);
 
-//---------------------------------------------------------------//
-//Progress bar//
 let barWidth = 0;
 
 function growBar() {
@@ -157,16 +153,10 @@ function growBar() {
         });
     }
 }
-
 function progress() {
     growBar(barWidth);
 }
-//---------------------------------------------------------------//
 
-
-
-//---------------------------------------------------------------//
-//Formulaire//
 $("#formulaire").validate({
     onfocusout: false,
     rules: {
@@ -188,18 +178,18 @@ $("#formulaire").validate({
     },
     messages: {
         prenom: {
-            required: "Le prénom est obligatoire",
+            required: "Le prénom est obligatoire.",
             maxlength: "Le prénom ne peut pas être plus long que..."
         },
         nom: {
-            required: "Le nom est obligatoire",
+            required: "Le nom est obligatoire.",
             maxlength: "Le nom ne peut pas être plus long que..."
         },
         date: {
-            required: "Le date de naissance est requise"
+            required: "Le date de naissance est requise."
         },
         statut: {
-            required: "Le statut est requis"
+            required: "Le statut est requis."
         }
     },
     submitHandler: function () {
@@ -234,7 +224,7 @@ jQuery.validator.addMethod(
     function (value, element) {
         return this.optional(element) || /^[\w.]+$/i.test(value);
     },
-    "Lettres et chiffres uniquement"
+    "Lettres et chiffres uniquement."
 );
 $.validator.addMethod(
     "dateInferieur",
@@ -242,9 +232,8 @@ $.validator.addMethod(
         const dateActuelle = new Date();
         return this.optional(element) || dateActuelle >= new Date(value);
     },
-    "La date de naissance doit être inférieure à la date d'aujourd'hui"
+    "La date de naissance doit être inférieure à la date d'aujourd'hui."
 );
-//---------------------------------------------------------------//
 
 let quizz = function () {
     $(document).ready(function () {
@@ -268,7 +257,6 @@ let quizz = function () {
                 $a = $("<a></a>");
                 $a.addClass("list-group-item");
                 $a.text(array[round].reponses[i]);
-
                 $(".list-group").append($a);
             }
         }
@@ -303,9 +291,6 @@ let quizz = function () {
                     return point;
                 } else {
                     round++
-                    //Affiche les résultats dans ecranResultat
-                    //Affichez le prénom, le nom, l’âge et le statut de l’utilisateur
-                    //Affichez le score, soit le nombre de bonnes réponses sur le nombre total de questions
                     $.each(profile, function () {
                         if (this.name === "prenom")
                             $("#resultatPrenom").text(this.value);
@@ -320,11 +305,8 @@ let quizz = function () {
                         if (this.name === "statut")
                             $("#resultatStatut").text(this.value);
                     });
-                    //score
                     $("#resultatScore").text(point + " / " + questions.length);
 
-                    // Vous devez afficher une table qui contient le numéro de la question, la question et une
-                    // indication montrant si la réponse a été bonne ou non. Vous devez utiliser DataTables.
                     $('#myTable').DataTable({
                         data: questions,
                         columns: [{
@@ -338,7 +320,6 @@ let quizz = function () {
                             }
                         ],
                         columnDefs: [{
-                            //affiche "Bon si resultat = 1, sinon affiche Pas bon"
                             render: function (data, type, row) {
                                 if (data == 0) return "Mauvaise réponse";
                                 return "Bonne réponse";
@@ -349,15 +330,13 @@ let quizz = function () {
                         bFilter: false,
                         info: false
                     });
-                    //l'accordion en jQueryUI
+
                     $.each(questions, function () {
                         let h3 = $("<h3>" + this.numero + ". " + this.question + "</h3>");
                         let div = $("<div><p><b>" + this.phrase + "</b></p><p>" + this.reponses + "</p></div>");
                         $("#accordionResultat").append(h3);
                         $("#accordionResultat").append(div);
                     });
-                    // Créez un accordéon avec JQueryUI ou Bootstrap qui affiche le numéro de la question et le
-                    //texte de la question. Quand on clique dessus, on voit une liste des choix de réponses
 
                     $("#accordionResultat").accordion({
                         collapsible: true,
@@ -367,36 +346,36 @@ let quizz = function () {
 
                     if (point > 7) {
                         $(".modal-content").addClass("alert-success succes-score");
-                        $(".modal-body>p").text(`C'est un véritable succès tu as : ${point}/${questions.length}.`);
+                        $(".modal-body>p").text(`C'est un véritable succès ! Tu as eu : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#progress").hide();
                         $("#ecranResultat").show();
-                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`C'est un véritable succès tu as : ${point}/10.`);
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`C'est un véritable succès ! Tu as eu : ${point}/10.`);
                     } else if (point >= 6) {
                         $(".modal-content").addClass("alert-warning bon-score");
-                        $(".modal-body>p").text(`C'est bon mais peut mieux faire tu as : ${point}/${questions.length}.`);
+                        $(".modal-body>p").text(`C'est bon, mais tu peux faire mieux. Tu as eu : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#progress").hide();
                         $("#ecranResultat").show();
-                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-warning bon-score").text(`C'est bon mais peut mieux faire tu as : ${point}/10.`);
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-warning bon-score").text(`C'est bon, mais tu peux faire mieux. Tu as eu : ${point}/10.`);
                     } else if (point <= 5) {
                         $(".modal-content").addClass("alert-danger echec-score");
-                        $(".modal-body>p").text(`C'est un véritable échec : ${point}/${questions.length}.`);
+                        $(".modal-body>p").text(`C'est un véritable échec, tu as eu : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#progress").hide();
                         $("#ecranResultat").show();
-                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-danger echec-score").text(`C'est un véritable échec : ${point}/10.`);
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-danger echec-score").text(`C'est un véritable échec, tu as eu : ${point}/10.`);
                     } else if (point = 10) {
                         $(".modal-content").addClass("alert-success succes-score");
-                        $(".modal-body>p").text(`Score parfait ! Tu as : ${point}/${questions.length}.`);
+                        $(".modal-body>p").text(`Score parfait ! Tu as eu : ${point}/${questions.length}.`);
                         $("#monModal").modal("show");
                         $("#accordion").hide();
                         $("#progress").hide();
                         $("#ecranResultat").show();
-                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`Tu as fait un score parfait de ${point}/10.`);
+                        $('.alert').alert().show().removeClass("alert-dark").addClass("alert-success succes-score").text(`Tu as fait un score parfait, de ${point}/10.`);
                     }
                 }
             } else {
