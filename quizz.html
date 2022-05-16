@@ -5,28 +5,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quizz</title>
+  <title>Test de français</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="./CSS/styles.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
 </head>
 
 <body>
 
   <!-- Header -->
-  <header class="d-flex justify-content-center align-items-center">
-    <h1>Test ton français</h1>
+  <header class="d-flex justify-content-center align-items-center" aria-label="titre">
+    <h1>Test de français !</h1>
   </header>
 
   <!-- Gestion des erreurs -->
-  <div id="erreurs" class="my-3">
+  <div id="erreurs" class="my-3" aria-label="erreurs">
   </div>
 
   <!-- Formulaire -->
-  <form id="formulaire" class="w-25 mx-auto">
+  <form id="formulaire" class="w-25 mx-auto" aria-label="formulaire">
+    <div class="form-group">
+      <legend>Inscription</legend>
+    </div>
     <div class="form-group">
       <label for="prenom" class="font-weight-bold">Prénom</label>
       <input type="text" name="prenom" class="form-control" id="prenom" required>
@@ -50,55 +54,44 @@
     <button type="submit" id="button-debut" class="btn btn-primary">Valider</button>
   </form>
 
-
   <!-- Accordion bootstrap 4.6 -->
-  <div class="accordion w-75 mx-auto" id="accordion">
+  <div class="accordion w-75 mx-auto mt-5" id="accordion" aria-label="questions">
     <div class="card">
-      <div class="card-header" id="headingOne">
+      <div class="card-header" id="heading-quiz">
         <h2 class="mb-0">
           <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <h5 class="card-title">Titre de la question ici</h5>
+            data-target="#collapse-quiz" aria-expanded="true" aria-controls="collapse-quiz">
+            <h5 class="card-title">
+            </h5>
           </button>
         </h2>
       </div>
     </div>
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapse-quiz" class="collapse show rounded-bottom" aria-labelledby="heading-quiz" data-parent="#accordion">
       <div class="card-body">
-        <p class="phrase">Phrase ici</p>
+        <p class="phrase">
+        </p>
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action active">Item 1 ici</a>
-          <a href="#" class="list-group-item list-group-item-action">Item 2 ici</a>
-          <a href="#" class="list-group-item list-group-item-action">Item 3 ici</a>
         </div>
-        <a href="#" class="btn btn-primary mt-3" id="btnSuivant">Question suivante</a>
+        <a href="#" class="btn btn-primary mt-3" id="btnSuivant">Suivant</a>
       </div>
     </div>
   </div>
-  </div>
-  <div class="row mt-3">
+  <div class="row mt-3 mx-0">
     <div class="col-12">
-      <div class="alert alert-dark" role="alert" id="message">
-        
-        <!-- MESSAGE ICI -->
-
-        <!-- PROGRESS BAR -->
-        <div class="progress">
-          <div id="pb" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-        </div>
-
+      <div class="alert alert-dark w-75 mx-auto" role="alert" id="message">
       </div>
     </div>
   </div>
   </div>
 
   <!-- Modal bootstrap 4.6 -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="monModal">
+  <div class="modal fade" tabindex="-1" role="dialog" id="monModal" aria-label="modal avec résultats">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Résultat</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -111,6 +104,75 @@
       </div>
     </div>
   </div>
+  <div class="row mx-0 col-lg-12 col-md-12" id="ecranResultat">
+    <div class="col-4" style="padding-left: 10px;" id="resultatCol1">
+      <table class="table table-bordered" title="Informations du participant">
+        <thead>
+          <tr>
+            <th scope="colgroup" colspan="2" class="text-center">Informations du participant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Prénom</th>
+            <td>
+              <span id="resultatPrenom"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Nom</th>
+            <td>
+              <span id="resultatNom"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Age</th>
+            <td>
+              <span id="resultatAge"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Statut</th>
+            <td>
+              <span id="resultatStatut"></span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Score</th>
+            <td>
+              <span id="resultatScore"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Data Table -->
+    <div class="col-4" id="resultatCol2" aria-label="data table résultat des questions">
+      <table id="myTable" class="display" style="width:80%">
+        <thead>
+          <tr>
+            <th>Numéro</th>
+            <th>Question</th>
+            <th>Résultat</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <!-- Accordéon questions JQueryUI -->
+    <div class="col-4" id="resultatCol3" aria-label="accordéon des questions">
+      <div id="accordionResultat">
+      </div>
+    </div>
+  </div>
+
+  <!--Progress Bar-->
+  <br>
+  <div class="progress" id="progress" aria-label="barre de progrès">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bar" role="progressbar" style="width: 0%"
+      aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
 
   <!-- Javascript -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -120,7 +182,9 @@
   <script src="./node_modules/popper.js/dist/popper.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="./node_modules/jquery-validation/dist/jquery.validate.js"></script>
+  <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
   <script src="./Javascript/quizz.js"></script>
 
 </body>
+
 </html>

@@ -16,13 +16,47 @@ header {
     }
 }
 
+form{
+    padding:20px;
+    border:1px solid rgba(0,0,0,.125);
+    border-radius:10px;
+    legend{
+        font-weight:bold;
+        font-size:1.3rem;
+        text-align:center;
+    }
+}
+
 #accordion {
     display: none;
 }
-
+.collapse{
+    border:1px solid rgba(0,0,0,.125);
+}
+.active{
+    color:#ffffff !important;
+}
 #message {
     display: none;
 }
 .succes-score{
-    background-color:#13E184 !important;
+    background-color:#d4edda !important;
+}
+.bon-score{
+    background-color:#fff3cd !important;
+}
+.echec-score{
+    background-color:#f8d7da !important;
+}
+.alert{
+    display:none;
+}
+
+#donnees{
+    display:none;
+}
+
+.ui-state-active{
+    background-color:$primary !important;
+    border:1px solid $primary !important;
 }
